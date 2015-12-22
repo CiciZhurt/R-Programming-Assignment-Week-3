@@ -1,4 +1,6 @@
 ## This function creates a special "matrix" object that can cache its inverse.
+## sample is the matrix object that user will submit on the console
+
 
 makeCacheMatrix <- function(sample = matrix()) {
   invsample <- NULL
