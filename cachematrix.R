@@ -1,36 +1,52 @@
-## This function creates a special "matrix" object that can cache its inverse.
-## sample is the matrix object that user will submit on the console
+##A program to find the inverse of a matrix and uses a cache for economy sakes!
+##makeCacheMatrix creates a matrix object to cache the inverse of the matrix
 
-
-makeCacheMatrix <- function(sample = matrix()) {
-  invsample <- NULL
-  set <- function(x) {
-    Sample <<- x
-    invsample <<- NULL
+makeCacheMatrix <- function(x = matrix()) {
+  
+  #Set vector and get vector
+  m <- NULL
+  set <- function(y) {
+    x <<-y 
+    m <<-NULL
   }
-  get <- function() sample
-  setInverse <- function(inverse) inv <<- inverse
-  getInverse <- function() invsample
-  list(set = set,
-       get = get,
-       setInverse = setInverse,
-       getInverse = getInverse)
+  
+  get <- function() x
+  
+  #set the inverse matrix and get the inverse matrix
+  setinv <-function(solve) m<<-solve
+  
+  #get the matrix
+  getinv <-function() m
+  
+  #return a list with the 4 member functions
+  list(set = set, get = get, setinv = setinv, getinv = getinv)
+   
 }
 
 
-## This function computes the inverse of the special "matrix" created by 
-## makeCacheMatrix above. If the inverse has already been calculated (and the 
-## matrix has not changed), then it should retrieve the inverse from the cache.
 
-cacheSolve <- function(sample, ...) {
-  ## Return a matrix that is the inverse of 'sample'
-  inv <- sample$getInverse()
-  if (!is.null(inv)) {
+#Compute the inverse of the matrix by makeCacheMatrix
+#If matrix is already computed, retrieve the matrix
+
+cacheSolve <- function(x, ...) {
+        ## Return a matrix that is the inverse of 'x'
+  m <- x$getinv
+  
+  #If data is already in cache return it
+  if(!is.null(m)){
     message("getting cached data")
-    return(invsample)
+    return(m)    
   }
-  mat <- sample$get()
-  invsample <- solve(mat, ...)
-  sample$setInverse(invsample)
-  invsample
+  
+  
+  #If data isn't there solve the matrix
+  
+  data <-x$get()
+  m<-solve(data, ...)
+  x$setinv(m)
+  m #return result
+  
 }
+
+
+
